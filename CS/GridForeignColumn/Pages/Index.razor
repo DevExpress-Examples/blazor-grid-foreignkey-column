@@ -1,0 +1,92 @@
+﻿@page "/"
+@inject IDbContextFactory<NorthwindContext> NorthwindContextFactory
+@using AutoMapper
+
+
+<DxGrid Data="Products"
+        EditModelSaving="OnEditModelSaving"
+        CustomizeCellDisplayText="Grid_CustomizeCellDisplayText"
+        EditMode="GridEditMode.EditRow">
+    <Columns>
+        <DxGridCommandColumn DeleteButtonVisible="false" />
+        <DxGridDataColumn FieldName="CategoryId"
+                          Caption="Category Name"
+                          TextAlignment="GridTextAlignment.Left" />
+        <DxGridDataColumn FieldName="ProductName" />
+        <DxGridDataColumn FieldName="UnitPrice" DisplayFormat="c" />
+        <DxGridDataColumn FieldName="UnitsInStock" />
+        <DxGridDataColumn FieldName="QuantityPerUnit" />
+    </Columns>
+    <DataColumnCellEditTemplate>
+        @{
+            var product = (Product)context.EditModel;
+        }
+        @switch (context.DataColumn.FieldName) {
+            case "ProductName":
+                <DxTextBox @bind-Text="@product.ProductName" CssClass="w-100" />
+                break;
+            case "QuantityPerUnit":
+                <DxTextBox @bind-Text="@product.QuantityPerUnit" CssClass="w-100" />
+                break;
+            case "UnitPrice":
+                <DxSpinEdit @bind-Value="@product.UnitsInStock" CssClass="w-100" />
+                break;
+            case "UnitsInStock":
+                <DxSpinEdit @bind-Value="@product.UnitsInStock" CssClass="w-100" />
+                break;
+            case "CategoryId":
+                <DxComboBox Data="Categories"
+                            @bind-Value="product.CategoryId"
+                            ValueFieldName="CategoryId"
+                            TextFieldName="CategoryName"
+                            FilteringMode="DataGridFilteringMode.Contains"
+                            ClearButtonDisplayMode="DataEditorClearButtonDisplayMode.Auto"
+                            CssClass="w-100" />
+                break;
+            default:
+                throw new NotImplementedException();
+        }
+    </DataColumnCellEditTemplate>
+</DxGrid>
+
+@code {
+    NorthwindContext Northwind { get; set; }
+    List<Product> Products { get; set; }
+    List<Category> Categories { get; set; }
+    Dictionary<int, string> CategoryNamesIndex { get; set; }
+    IMapper ProductMapper { get; set; }
+
+    protected override async Task OnInitializedAsync() {
+        var config = new MapperConfiguration(c => c.CreateMap<Product, Product>());
+        ProductMapper = config.CreateMapper();
+        Northwind = NorthwindContextFactory.CreateDbContext();
+        Products = await Northwind.Products.ToListAsync();
+        Categories = await Northwind.Categories.ToListAsync();
+        CategoryNamesIndex = Categories.ToDictionary(i => i.CategoryId, i => i.CategoryName);
+    }
+
+    async Task OnEditModelSaving(GridEditModelSavingEventArgs e) {  
+        var editableProduct = (Product)e.EditModel;
+        var product = e.IsNew
+            ? new Product()
+            : Northwind.Products.Find(e.Grid.GetDataItemValue(e.DataItem, "ProductId"));
+        ProductMapper.Map<Product, Product>(editableProduct, product);
+
+        if(e.IsNew)
+            await Northwind.Products.AddAsync(product);
+        await Northwind.SaveChangesAsync();
+
+        Products = await Northwind.Products.ToListAsync();
+    }
+
+    void Grid_CustomizeCellDisplayText(GridCustomizeCellDisplayTextEventArgs e) {
+        string displayText;
+        var categoryID = Convert.ToInt32(e.GetRowValue("CategoryId"));
+        if(e.FieldName == "CategoryId" && CategoryNamesIndex.TryGetValue(categoryID, out displayText))
+            e.DisplayText = displayText;
+    }
+
+    public void Dispose() {
+        Northwind?.Dispose();
+    }
+}
