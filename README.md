@@ -16,7 +16,7 @@ Alternatively, the **Category Name** column can remain unbound. [Specify](./CS/G
 
 In both instances, you can create a [data column cell editor](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.DataColumnCellEditTemplate) or [cell editor](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn.CellEditTemplate) template and place a [combo box](./CS/GridForeignColumn/Pages/Index.razor#L38) in it (this will allow users to select the appropriate value for the **Category Name** column).
 
-## Files to Look At
+## Files to Review
 
 - [Index.razor](./CS/GridForeignColumn/Pages/Index.razor)
 - [UnboundColumn.razor](./CS/GridForeignColumn/Pages/UnboundColumn.razor)
