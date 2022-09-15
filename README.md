@@ -5,9 +5,6 @@
 <!-- default badges end -->
 
 # Blazor Grid - Create a ComboBox (Foreign Key) Column
-<!-- run online -->
-**[[Run Online]](https://codecentral.devexpress.com/523321257/)**
-<!-- run online end -->
 
 A foreign key is a database key used to manage relations between tables. You can use it to identify a specific row in the referenced table and obtain row data. You can use following two techniques to display this relationship within the DevExpress Blazor Grid component:
 
