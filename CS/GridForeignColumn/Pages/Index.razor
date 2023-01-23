@@ -80,10 +80,11 @@
     }
 
     void Grid_CustomizeCellDisplayText(GridCustomizeCellDisplayTextEventArgs e) {
-        string displayText;
-        var categoryID = Convert.ToInt32(e.GetRowValue("CategoryId"));
-        if(e.FieldName == "CategoryId" && CategoryNamesIndex.TryGetValue(categoryID, out displayText))
-            e.DisplayText = displayText;
+        if (e.FieldName == "CategoryId") {
+            var categoryID = Convert.ToInt32(e.Value);
+            if (CategoryNamesIndex.ContainsKey(categoryID))
+                e.DisplayText = CategoryNamesIndex[categoryID];
+        }
     }
 
     public void Dispose() {
