@@ -6,26 +6,24 @@
 
 # Blazor Grid - Create a ComboBox (Foreign Key) Column
 
-A foreign key is a database key used to manage relations between tables. You can use it to identify a specific row in the referenced table and obtain row data. You can use following two techniques to display this relationship within the DevExpress Blazor Grid component:
+A foreign key is a database key used to manage relations between tables. You can use it to identify a specific column in the referenced table and obtain column data. This example demonstrates how to display this relationship in the [DevExpress Blazor Grid](https://docs.devexpress.com/Blazor/403143/components/grid) component.
 
 ![Grid with ComboBox column](result.png)
 
-First option, you can create a [dictionary](./CS/GridForeignColumn/Pages/Index.razor#L65) that contains the category's ID and name. Use this dictionary to obtain [display text](./CS/GridForeignColumn/Pages/Index.razor#L85) in the [CustomizeCellDisplayText](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.CustomizeCellDisplayText) event handler for the **Category Name** column.
+Follow the steps below to create a foreign key column in the Grid component:
 
-Alternatively, the **Category Name** column can remain unbound. [Specify](./CS/GridForeignColumn/Pages/UnboundColumn.razor#L60) the column's cell value in the [UnboundColumnData](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.UnboundColumnData) event handler.
-
-In both instances, you can create a [data column cell editor](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.DataColumnCellEditTemplate) or [cell editor](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn.CellEditTemplate) template and place a [combo box](./CS/GridForeignColumn/Pages/Index.razor#L38) in it (this will allow users to select the appropriate value for the **Category Name** column).
+1. Add a [DxGridDataColumn](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn) object to the Grid's column collection. Assign the name of the field that stores foreign keys to the column's [FieldName](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn.FieldName) property.
+2. Place [DxComboBoxSettings](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxComboBoxSettings) within the column's [EditSettings](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn.EditSettings) tag.
+3. Assign an external data source to the [Data](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxComboBoxSettings.Data) combo box setting.
+4. Specify [ValueFieldName](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxComboBoxSettings.ValueFieldName) and [TextFieldName](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxComboBoxSettings.TextFieldName) settings to populate combo box items with values and text strings.
 
 ## Files to Review
 
 - [Index.razor](./CS/GridForeignColumn/Pages/Index.razor)
-- [UnboundColumn.razor](./CS/GridForeignColumn/Pages/UnboundColumn.razor)
 
 ## Documentation
 
-- [DataColumnCellEditTemplate](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.DataColumnCellEditTemplate)
-- [CustomizeCellDisplayText](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.CustomizeCellDisplayText)
-- [UnboundColumnData](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.UnboundColumnData)
+* [Edit Data](https://docs.devexpress.com/Blazor/403454/components/grid/edit-data)
 
 ## More Examples
 
