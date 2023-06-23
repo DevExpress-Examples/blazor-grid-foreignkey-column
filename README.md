@@ -12,10 +12,11 @@ A foreign key is a database key used to manage relations between tables. You can
 
 Follow the steps below to create a foreign key column in the Grid component:
 
-1. Add a [DxGridDataColumn](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn) object to the Grid's column collection. Assign the name of the field that stores foreign keys to the column's [FieldName](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn.FieldName) property.
-2. Place [DxComboBoxSettings](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxComboBoxSettings) within the column's [EditSettings](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn.EditSettings) tag.
-3. Assign an external data source to the [Data](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxComboBoxSettings.Data) combo box setting.
-4. Specify [ValueFieldName](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxComboBoxSettings.ValueFieldName) and [TextFieldName](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxComboBoxSettings.TextFieldName) settings to populate combo box items with values and text strings.
+1. Add a [DxGridDataColumn](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn) object to the Grid's column collection. 
+2. Assign the name of the field that stores foreign keys to the column's [FieldName](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn.FieldName) property.
+3. Place [DxComboBoxSettings](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxComboBoxSettings) within the column's [EditSettings](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn.EditSettings) tag.
+4. Assign an external data source to the [Data](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxComboBoxSettings.Data) combo box setting.
+5. Specify [ValueFieldName](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxComboBoxSettings.ValueFieldName) and [TextFieldName](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxComboBoxSettings.TextFieldName) settings to populate combo box items with values and text strings.
 
 ## Files to Review
 
