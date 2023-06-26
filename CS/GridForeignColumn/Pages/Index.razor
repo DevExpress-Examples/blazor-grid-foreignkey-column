@@ -5,55 +5,30 @@
 
 <DxGrid Data="Products"
         EditModelSaving="OnEditModelSaving"
-        CustomizeCellDisplayText="Grid_CustomizeCellDisplayText"
         EditMode="GridEditMode.EditRow">
     <Columns>
         <DxGridCommandColumn DeleteButtonVisible="false" />
-        <DxGridDataColumn FieldName="CategoryId"
-                          Caption="Category Name"
-                          TextAlignment="GridTextAlignment.Left" />
+        <DxGridDataColumn FieldName="CategoryId" Caption="Category Name">
+            <EditSettings>
+                <DxComboBoxSettings
+                    Data="Categories"
+                    ValueFieldName="CategoryId"
+                    TextFieldName="CategoryName"
+                    FilteringMode="DataGridFilteringMode.Contains"
+                    ClearButtonDisplayMode="DataEditorClearButtonDisplayMode.Auto"/>
+            </EditSettings>
+        </DxGridDataColumn>
         <DxGridDataColumn FieldName="ProductName" />
         <DxGridDataColumn FieldName="UnitPrice" DisplayFormat="c" />
         <DxGridDataColumn FieldName="UnitsInStock" />
         <DxGridDataColumn FieldName="QuantityPerUnit" />
     </Columns>
-    <DataColumnCellEditTemplate>
-        @{
-            var product = (Product)context.EditModel;
-        }
-        @switch (context.DataColumn.FieldName) {
-            case "ProductName":
-                <DxTextBox @bind-Text="@product.ProductName" CssClass="w-100" />
-                break;
-            case "QuantityPerUnit":
-                <DxTextBox @bind-Text="@product.QuantityPerUnit" CssClass="w-100" />
-                break;
-            case "UnitPrice":
-                <DxSpinEdit @bind-Value="@product.UnitPrice" CssClass="w-100" />
-                break;
-            case "UnitsInStock":
-                <DxSpinEdit @bind-Value="@product.UnitsInStock" CssClass="w-100" />
-                break;
-            case "CategoryId":
-                <DxComboBox Data="Categories"
-                            @bind-Value="product.CategoryId"
-                            ValueFieldName="CategoryId"
-                            TextFieldName="CategoryName"
-                            FilteringMode="DataGridFilteringMode.Contains"
-                            ClearButtonDisplayMode="DataEditorClearButtonDisplayMode.Auto"
-                            CssClass="w-100" />
-                break;
-            default:
-                throw new NotImplementedException();
-        }
-    </DataColumnCellEditTemplate>
 </DxGrid>
 
 @code {
     NorthwindContext Northwind { get; set; }
     List<Product> Products { get; set; }
     List<Category> Categories { get; set; }
-    Dictionary<int, string> CategoryNamesIndex { get; set; }
     IMapper ProductMapper { get; set; }
 
     protected override async Task OnInitializedAsync() {
@@ -62,7 +37,6 @@
         Northwind = NorthwindContextFactory.CreateDbContext();
         Products = await Northwind.Products.ToListAsync();
         Categories = await Northwind.Categories.ToListAsync();
-        CategoryNamesIndex = Categories.ToDictionary(i => i.CategoryId, i => i.CategoryName);
     }
 
     async Task OnEditModelSaving(GridEditModelSavingEventArgs e) {  
@@ -77,14 +51,6 @@
         await Northwind.SaveChangesAsync();
 
         Products = await Northwind.Products.ToListAsync();
-    }
-
-    void Grid_CustomizeCellDisplayText(GridCustomizeCellDisplayTextEventArgs e) {
-        if (e.FieldName == "CategoryId") {
-            var categoryID = Convert.ToInt32(e.Value);
-            if (CategoryNamesIndex.ContainsKey(categoryID))
-                e.DisplayText = CategoryNamesIndex[categoryID];
-        }
     }
 
     public void Dispose() {
