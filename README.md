@@ -6,17 +6,16 @@
 
 # Blazor Grid - Create a ComboBox (Foreign Key) Column
 
-A foreign key is a database key used to manage relations between tables. You can use it to identify a specific column in the referenced table and obtain column data. This example demonstrates how to display this relationship in the [DevExpress Blazor Grid](https://docs.devexpress.com/Blazor/403143/components/grid) component.
+As you know, a foreign key is a database key used to manage relationships between individual tables. You can use the key to identify a specific column in a referenced table (and obtain column data). This example illustrates the use of foreign keys within the [DevExpress Blazor Grid](https://docs.devexpress.com/Blazor/403143/components/grid) UI component.
 
 ![Grid with ComboBox column](result.png)
 
-Follow the steps below to create a foreign key column in the Grid component:
-
-1. Add a [DxGridDataColumn](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn) object to the Grid's column collection. 
-2. Assign the name of the field that stores foreign keys to the column's [FieldName](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn.FieldName) property.
-3. Place [DxComboBoxSettings](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxComboBoxSettings) within the column's [EditSettings](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn.EditSettings) tag.
-4. Assign an external data source to the [Data](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxComboBoxSettings.Data) combo box setting.
-5. Assign the name of the external data source's field that stores foreign keys to the [ValueFieldName](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxComboBoxSettings.ValueFieldName) setting. The [TextFieldName](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxComboBoxSettings.TextFieldName) setting allows you specify text strings displayed instead of foreign keys.
+To create a foreign key column in the DevExpress Blazor Grid component, you must:
+1.	Add a [DxGridDataColumn](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn) object to the Grid's column collection.
+2.	Assign the field name that stores foreign keys to the column's [FieldName](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn.FieldName) property.
+3.	Place [DxComboBoxSettings](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxComboBoxSettings) within the column's [EditSettings](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn.EditSettings) tag.
+4.	Assign an external data source to the [Data](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxComboBoxSettings.Data) combo box setting.
+5.	Assign the name of the external data source field that stores foreign keys to the [ValueFieldName](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxComboBoxSettings.ValueFieldName) setting. The [TextFieldName](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxComboBoxSettings.TextFieldName) setting allows you specify text strings displayed within the Grid (instead of foreign keys).
 
 ## Files to Review
 
