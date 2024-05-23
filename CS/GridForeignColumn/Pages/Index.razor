@@ -1,7 +1,5 @@
 ﻿@page "/"
 @inject IDbContextFactory<NorthwindContext> NorthwindContextFactory
-@using AutoMapper
-
 
 <DxGrid Data="Products"
         EditModelSaving="OnEditModelSaving"
@@ -29,11 +27,8 @@
     NorthwindContext Northwind { get; set; }
     List<Product> Products { get; set; }
     List<Category> Categories { get; set; }
-    IMapper ProductMapper { get; set; }
 
     protected override async Task OnInitializedAsync() {
-        var config = new MapperConfiguration(c => c.CreateMap<Product, Product>());
-        ProductMapper = config.CreateMapper();
         Northwind = NorthwindContextFactory.CreateDbContext();
         Products = await Northwind.Products.ToListAsync();
         Categories = await Northwind.Categories.ToListAsync();
@@ -41,13 +36,7 @@
 
     async Task OnEditModelSaving(GridEditModelSavingEventArgs e) {  
         var editableProduct = (Product)e.EditModel;
-        var product = e.IsNew
-            ? new Product()
-            : Northwind.Products.Find(e.Grid.GetDataItemValue(e.DataItem, "ProductId"));
-        ProductMapper.Map<Product, Product>(editableProduct, product);
-
-        if(e.IsNew)
-            await Northwind.Products.AddAsync(product);
+        e.CopyChangesToDataItem();
         await Northwind.SaveChangesAsync();
 
         Products = await Northwind.Products.ToListAsync();
